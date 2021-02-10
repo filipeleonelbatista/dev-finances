@@ -49,7 +49,7 @@ Para tornar esta aplicação mais util para mim, decidi transformar ela em uma a
 
 ### Download
 
-Baixar o aplicativo do Expo para [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=pt_BR&gl=US) e [IOS](https://apps.apple.com/br/app/expo-client/id982107779) e escanear o codigo a baixo.
+Baixar o aplicativo do Expo para [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=pt_BR&gl=US) e [IOS](https://apps.apple.com/br/app/expo-client/id982107779) e escanear o codigo a baixo. Ou ainda acessar o [Snack do Expo neste link](https://snack.expo.io/@filipegaucho22/dev-finances)
 
 <h1 align="center">
   <img alt="snack-barcode" title="dev.finances" src=".github/snack.png" width="220px" />
