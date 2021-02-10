@@ -28,6 +28,8 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - HTML
 - CSS
 - JavaScript
+- React Native (Milha extra)
+- Expo (Milha extra)
 
 ## 💻 Projeto
 
@@ -41,6 +43,51 @@ Você pode visualizar o layout do projeto através [desse link](https://www.figm
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
 
+## 🏃🏻‍♂️ Milha Extra
+
+Para tornar esta aplicação mais util para mim, decidi transformar ela em uma aplicação móvel usando React Native com Expo usando AsyncStorage como foi usado o localStorage no web.
+
+### Download
+
+Baixar o aplicativo do Expo para [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=pt_BR&gl=US) e [IOS](https://apps.apple.com/br/app/expo-client/id982107779) e escanear o codigo a baixo.
+
+#### 🗂 Como instalar o projeto em react native
+
+```bash
+
+    # Clonar o repositório
+    $ git clone https://github.com/filipeleonelbatista/dev-finances.git
+
+    # Entrar no diretório desejado
+    $ cd dev-finances
+    $ cd mobile
+
+    # Instalando as dependencias com Yarn
+    $ yarn install
+    # Executando a aplicação
+    $ yarn start
+    
+    # Instalando as dependencias com NPM
+    $ npm install
+    # Executando a aplicação
+    $ npx run start
+```
+
 ---
 
-Feito com ♥ by Rocketseat :wave: [Participe da nossa comunidade!](https://discordapp.com/invite/gCRAFhc)
+<h3 align="center" >Vamos nos conectar 😉</h3>
+<p align="center">
+  <a href="https://www.linkedin.com/in/filipelbatista/">
+    <img alt="LinkedIn" width="22px" src="https://github.com/filipeleonelbatista/filipeleonelbatista/blob/master/assets/052-linkedin.svg" />
+  </a>&ensp;
+  <a href="mailto:filipe.x2016@gmail.com">
+    <img alt="Email" width="22px" src="https://github.com/filipeleonelbatista/filipeleonelbatista/blob/master/assets/gmail.svg" />
+  </a>&ensp;
+  <a href="https://instagram.com/filipegaucho22">
+    <img alt="Instagram" width="22px" src="https://github.com/filipeleonelbatista/filipeleonelbatista/blob/master/assets/044-instagram.svg" />
+  </a>
+</p>
+<br />
+<p align="center">
+    Desenvolvido 💜 por Filipe Batista 
+</p>
