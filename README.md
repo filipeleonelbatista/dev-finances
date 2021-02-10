@@ -51,6 +51,9 @@ Para tornar esta aplicação mais util para mim, decidi transformar ela em uma a
 
 Baixar o aplicativo do Expo para [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=pt_BR&gl=US) e [IOS](https://apps.apple.com/br/app/expo-client/id982107779) e escanear o codigo a baixo.
 
+<div data-snack-id="@filipegaucho22/dev-finances" data-snack-platform="mydevice" data-snack-preview="true" data-snack-theme="dark" style="overflow:hidden;background:#212121;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%"></div>
+<script async src="https://snack.expo.io/embed.js"></script>
+
 #### 🗂 Como instalar o projeto em react native
 
 ```bash
