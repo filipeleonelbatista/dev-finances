@@ -56,7 +56,7 @@ export default function AboutUs() {
                         <RectButton onPress={handleCopyToClipboardPixKey} style={styles.button}>
                             <Text style={styles.buttonText} >
                                 Me pague uma pizza 😉
-                        </Text>
+                            </Text>
                         </RectButton>
                         <Text style={styles.subtitle}>Via PIX</Text>
                     </View>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: 16,
-        fontWeight: '600',
+        fontFamily: 'Poppins_400Regular',
         color: '#363f5f'
     },
     contentImg: {
@@ -114,7 +114,8 @@ const styles = StyleSheet.create({
         height: 'auto',
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 24
+        marginVertical: 24,
+
     },
     imageBorder: {
         width: 128,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     title: {
         textAlign: 'center',
         fontSize: 32,
-        fontWeight: '600',
+        fontFamily: 'Poppins_400Regular',
         color: '#f0f2f5',
         marginVertical: 24,
     },
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     },
     headerButtonText: {
         fontSize: 24,
-        fontWeight: '600',
+        fontFamily: 'Poppins_400Regular',
         color: '#f0f2f5',
     },
     cardWite: {
@@ -212,25 +213,25 @@ const styles = StyleSheet.create({
     },
     cardTextGreen: {
         fontSize: 18,
-        fontWeight: '600',
+        fontFamily: 'Poppins_400Regular',
         color: '#f0f2f5',
         marginBottom: 24,
         marginBottom: 12,
     },
     cardValueGreen: {
         fontSize: 32,
-        fontWeight: '600',
+        fontFamily: 'Poppins_400Regular',
         color: '#f0f2f5'
     },
     cardText: {
         fontSize: 18,
-        fontWeight: '600',
+        fontFamily: 'Poppins_400Regular',
         marginBottom: 24,
         marginBottom: 12,
     },
     cardValue: {
         fontSize: 32,
-        fontWeight: '600',
+        fontFamily: 'Poppins_400Regular',
         color: '#363f5f'
     },
     cardTitleOrientation: {
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 48,
         marginHorizontal: 24,
-        marginVertical: 6,
+        marginVertical: 4,
         backgroundColor: '#49AA26',
         paddingHorizontal: 48,
         paddingVertical: 12,
@@ -256,7 +257,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 18,
-        fontWeight: '600',
+        fontFamily: 'Poppins_400Regular',
         color: '#f0f2f5',
         textAlign: 'center',
     },

@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dev-finances.list",
+      "bundleIdentifier": "com.devfinances.list",
       "buildNumber": "1.0.0"
     },
     "android": {
@@ -26,7 +26,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#20CB3D"
       },
-      "package": "com.dev-finances.list",
+      "package": "com.devfinances.list",
       "versionCode": 1
     },
     "web": {

@@ -1,37 +1,83 @@
 import React, { useEffect, useState } from 'react';
 
-import { ImageBackground, View, Text, StyleSheet, Dimensions, Alert } from 'react-native';
+import { Image, ImageBackground, View, Text, StyleSheet, Dimensions, Alert } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Feather } from '@expo/vector-icons';
 
-import bgImg from '../assets/images/background.png'
+import bgImg from '../assets/images/background.png';
+import logo from '../assets/images/logo.png';
 
 export default function Finances() {
 
   const navigation = useNavigation()
-  const [transactions, setTransactions] = useState({});
+  const [transactions, setTransactions] = useState([]);
+  const [Incomings, setIncomings] = useState("0,00");
+  const [Expenses, setExpenses] = useState("0,00");
+  const [Total, setTotal] = useState("0,00");
+  const [Load, setLoad] = useState(true);
 
   async function loadTransactions() {
     try {
-      const value = await AsyncStorage.getItem('transactions')
+      const value = await AsyncStorage.getItem('transactions');
+      const valueArray = JSON.parse(value)
       if (value !== null) {
         setTransactions(JSON.parse(value))
+      } else {
+        await AsyncStorage.setItem('transactions', JSON.stringify([]));
       }
+
+
+      let incomings = 0;
+      let expenses = 0;
+      let total = 0;
+
+      valueArray.map(transaction => {
+        if(transaction.isExpense){
+          expenses = expenses + parseFloat(transaction.amount);
+        }else{          
+          incomings = incomings + parseFloat(transaction.amount);
+        }
+      });
+      
+      total = incomings - expenses;
+
+      let totalFormat = String(total).replace(/\D/g, "");
+      totalFormat = totalFormat.replace(/(\d)(\d{2})$/, "$1,$2");
+      totalFormat = totalFormat.replace(/(?=(\d{3})+(\D))\B/g, ".");
+
+      let expenseFormat = String(expenses).replace(/\D/g, "");
+      expenseFormat = expenseFormat.replace(/(\d)(\d{2})$/, "$1,$2");
+      expenseFormat = expenseFormat.replace(/(?=(\d{3})+(\D))\B/g, ".");
+
+      let incomingsFormat = String(incomings).replace(/\D/g, "");
+      incomingsFormat = incomingsFormat.replace(/(\d)(\d{2})$/, "$1,$2");
+      incomingsFormat = incomingsFormat.replace(/(?=(\d{3})+(\D))\B/g, ".");
+
+      let resultTotal = total >= 0 ? "R$ " + (totalFormat ==="0"? "0,00" : (total < 100 ? "0,"+ totalFormat : totalFormat)) : "-R$ " + (total > -100 ? "0," + totalFormat : totalFormat);
+      let resultExpense =  expenses === 0 ? ( expenses > -100 ? "-R$ 0," + expenseFormat : "-R$ " + expenseFormat ) : "-R$ " + expenseFormat;
+      let resultIncoming = incomings === 0 ? ( incomings < 100 ? "R$ 0," + incomingsFormat : "R$ " + incomingsFormat ) : "R$ " + incomingsFormat;
+
+      setTotal(resultTotal);
+      setExpenses(resultExpense);
+      setIncomings(resultIncoming);
     } catch (e) {
       Alert.alert(
         "Erro",
-        "Não foi possível carregar dados do armazenamento\n\nErro:\n"+e,
+        "Não foi possível carregar dados do armazenamento\n\nErro:\n" + e,
         [
-          { text: "OK", onPress: () => console.log("OK Pressed") }
+          { text: "OK", onPress: () => { } }
         ],
         { cancelable: false }
       );
     }
+
+    return;
   }
-  useEffect(() => {
+
+  useFocusEffect(() => {
     loadTransactions();
   });
 
@@ -50,7 +96,7 @@ export default function Finances() {
         <ImageBackground source={bgImg} style={styles.header}>
           <View style={styles.headerItens}>
             <View style={styles.headerEmpty} />
-            <Text style={styles.title}>dev.finance$</Text>
+            <Image source={logo} style={styles.imageHeader} />
             <RectButton onPress={handleNavigate} style={styles.headerButton}>
               <Feather name="plus" size={24} color="#FFF" />
             </RectButton>
@@ -64,26 +110,35 @@ export default function Finances() {
               <Text style={styles.cardText}>Entradas</Text>
               <Feather name="arrow-up-circle" size={48} color="#12a454" />
             </View>
-            <Text style={styles.cardValue}>R$ 5.000,00</Text>
+            <Text style={styles.cardValue}>{Incomings}</Text>
           </View>
           <View style={styles.cardWite}>
             <View style={styles.cardTitleOrientation}>
               <Text style={styles.cardText}>Saídas</Text>
-              <Feather name="arrow-up-circle" size={48} color="#e83e5a" />
+              <Feather name="arrow-down-circle" size={48} color="#e83e5a" />
             </View>
-            <Text style={styles.cardValue}>-R$ 5.000,00</Text>
+            <Text style={styles.cardValue}>{Expenses}</Text>
           </View>
           <View style={styles.cardGreen}>
             <View style={styles.cardTitleOrientation}>
               <Text style={styles.cardTextGreen}>Total</Text>
               <Feather name="dollar-sign" size={48} color="#FFF" />
             </View>
-            <Text style={styles.cardValueGreen}>-R$ 5.000,00</Text>
+            <Text style={styles.cardValueGreen}>{Total}</Text>
           </View>
 
           <RectButton onPress={handleNavigateList} style={styles.button}>
             <Text style={styles.buttonText} >Ver Transações</Text>
           </RectButton>
+          {/* <RectButton onPress={() => { console.log(transactions) }} style={styles.button}>
+            <Text style={styles.buttonText} >Ver Console.log</Text>
+          </RectButton>
+          <RectButton onPress={async () => {
+            await AsyncStorage.setItem('transactions', JSON.stringify([]));
+            loadTransactions();
+          }} style={styles.button}>
+            <Text style={styles.buttonText} >Limpar Transações</Text>
+          </RectButton> */}
 
         </ScrollView>
       </View>
@@ -101,7 +156,6 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 32,
-    fontWeight: '600',
     color: '#f0f2f5',
     marginVertical: 24,
   },
@@ -111,6 +165,7 @@ const styles = StyleSheet.create({
     marginTop: -108,
   },
   header: {
+    paddingTop: 12,
     height: 192,
     width: '100%',
     backgroundColor: '#2D4A22',
@@ -125,6 +180,8 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   headerButton: {
     width: 48,
@@ -134,9 +191,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  imageHeader: {
+    width: 150,
+    height: 21,
+  },
   headerButtonText: {
     fontSize: 24,
-    fontWeight: '600',
     color: '#f0f2f5',
   },
   cardWite: {
@@ -157,26 +217,26 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
   },
   cardTextGreen: {
+    fontFamily: 'Poppins_400Regular',
     fontSize: 18,
-    fontWeight: '600',
     color: '#f0f2f5',
     marginBottom: 24,
     marginBottom: 12,
   },
   cardValueGreen: {
-    fontSize: 32,
-    fontWeight: '600',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 28,
     color: '#f0f2f5'
   },
   cardText: {
+    fontFamily: 'Poppins_400Regular',
     fontSize: 18,
-    fontWeight: '600',
     marginBottom: 24,
     marginBottom: 12,
   },
   cardValue: {
-    fontSize: 32,
-    fontWeight: '600',
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 28,
     color: '#363f5f'
   },
   cardTitleOrientation: {
@@ -192,14 +252,17 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 48,
     marginHorizontal: 24,
-    marginVertical: 12,
+    marginVertical: 6,
     backgroundColor: '#49AA26',
     paddingHorizontal: 48,
-    paddingVertical: 24,
+    paddingVertical: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
+    fontFamily: 'Poppins_400Regular',
     fontSize: 18,
-    fontWeight: '600',
     color: '#f0f2f5',
     textAlign: 'center',
   },

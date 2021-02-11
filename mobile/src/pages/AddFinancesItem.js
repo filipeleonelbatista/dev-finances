@@ -1,30 +1,49 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Button, ImageBackground, View, Text, StyleSheet, Dimensions, TextInput, Alert } from 'react-native';
+import { Button, ImageBackground, View, Switch, Text, StyleSheet, Dimensions, TextInput, Alert, ToastAndroid } from 'react-native';
 import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
 
-import bgImg from '../assets/images/background.png'
+import bgImg from '../assets/images/background.png';
+
+import 'react-native-get-random-values';
+import { v4 } from 'uuid';
 
 export default function AddFinancesItem() {
+
+    function moeda(e) {
+        let value = e;
+        value = value.replace(/\D/g, "");
+        value = value.replace(/(\d)(\d{2})$/, "$1,$2");
+        value = value.replace(/(?=(\d{3})+(\D))\B/g, ".");
+        setAmount(value);
+    }
+    function maskDate(e) {
+        let value = e;
+        value = value.replace(/\D/g, "");
+        value = value.replace(/(\d{2})(\d{2})(\d{4})$/, "$1/$2/$3");
+        setData(value);
+    }
+
     const navigation = useNavigation();
 
-    const [transactions, setTransactions] = useState({});
+    const [transactions, setTransactions] = useState([]);
 
     async function loadTransactions() {
         try {
-            const value = await AsyncStorage.getItem('transactions')
+            const value = await AsyncStorage.getItem('transactions');
+
             if (value !== null) {
-                setTransactions(JSON.parse(value))
+                setTransactions(JSON.parse(value));
             }
         } catch (e) {
             Alert.alert(
                 "Erro",
-                "Não foi possível carregar dados do armazenamento\n\nErro:\n"+e,
+                "Não foi possível carregar dados do armazenamento\n\nErro:\n" + e,
                 [
                     { text: "OK", onPress: () => console.log("OK Pressed") }
                 ],
@@ -34,11 +53,19 @@ export default function AddFinancesItem() {
     }
     useEffect(() => {
         loadTransactions();
-    });
+    }, []);
 
+
+
+
+    const [Description, setDescription] = useState("");
+    const [Amount, setAmount] = useState("");
+    const [data, setData] = useState("");
+    const [isEnabled, setIsEnabled] = useState(false);
+
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     const [date, setDate] = useState(new Date(Date.now()));
-    const [data, setData] = useState("");
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
@@ -50,6 +77,38 @@ export default function AddFinancesItem() {
     };
 
     function handleNavigate() {
+        navigation.navigate('Finances');
+    }
+
+    async function handleSaveTransaction() {
+        if ((Description.trim() === "") ||
+            (Amount.trim() === "") ||
+            (data.trim() === "")) {
+            Alert.alert(
+                "Faltou algo",
+                "Por favor, preencha todos os campos",
+                [
+                    { text: "OK", onPress: () => { } }
+                ],
+                { cancelable: false }
+            );
+            return;
+        }
+        const valueAmount = Math.round(parseFloat(Amount.replace(".", "").replace(",", ".")) * 100);
+        let trx = transactions;
+
+        trx.push({
+            id: v4(),
+            description: Description,
+            amount: valueAmount,
+            date: data,
+            isExpense: isEnabled
+        })
+
+        setTransactions(trx);
+        await AsyncStorage.setItem('transactions', JSON.stringify(transactions));
+        ToastAndroid.show('Item adicionado a lista', ToastAndroid.SHORT);
+
         navigation.navigate('Finances');
     }
     return (
@@ -64,33 +123,54 @@ export default function AddFinancesItem() {
                 <View style={styles.cardWite}>
                     <View>
                         <Text style={styles.label}>Descrição</Text>
-                        <TextInput style={styles.input} />
+                        <TextInput style={styles.input}
+                            placeholder="Descrição"
+                            onChangeText={(text) => { setDescription(text) }}
+                            value={Description}
+                        />
                     </View>
                     <View>
                         <Text style={styles.label}>Valor</Text>
-                        <TextInput style={styles.input} />
-                        <Text style={styles.subtitle}>
+                        <TextInput style={styles.input}
+                            keyboardType="decimal-pad"
+                            placeholder="Valor"
+                            onChangeText={(text) => { moeda(text) }}
+                            value={Amount}
+                        />
+                        {/* <Text style={styles.subtitle}>
                             Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais
-                        </Text>
+                        </Text> */}
                     </View>
                     <View>
                         <Text style={styles.label}>Data</Text>
                         <View style={styles.inputGroup}>
                             <TextInput
-                                onFocus={() => { setShow(true) }}
-                                value={data === "" ? "dd/mm/aaaa" : `${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}/${(date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)}/${date.getFullYear()}`}
-                                style={styles.inputInputGroup} />
+                                placeholder="dd/mm/aaaa"
+                                keyboardType="decimal-pad"
+                                maxLength={10}
+                                value={data}
+                                style={styles.inputInputGroup}
+                                onChangeText={(text) => { maskDate(text) }} />
                             <TouchableOpacity onPress={() => { setShow(true) }} style={styles.buttonInputGroup}>
                                 <Feather name="calendar" size={24} color="#000" />
                             </TouchableOpacity>
                         </View>
                     </View>
-
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Switch
+                            trackColor={{ false: "#767577", true: "#767577" }}
+                            thumbColor={isEnabled ? "#04D361" : "#3e3e3e"}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={isEnabled}
+                        />
+                        <Text style={styles.labelSwitch}>Despesa</Text>
+                    </View>
+                    <TouchableOpacity onPress={handleSaveTransaction} style={styles.buttonSave}>
+                        <Text style={styles.buttonText}>Salvar</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={handleNavigate} style={styles.buttonCancel}>
                         <Text style={styles.buttonTextCancel}>Cancelar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handleNavigate} style={styles.buttonSave}>
-                        <Text style={styles.buttonText}>Salvar</Text>
                     </TouchableOpacity>
                 </View>
                 {show && (
@@ -123,7 +203,7 @@ const styles = StyleSheet.create({
         marginTop: 6,
         paddingHorizontal: 12,
         backgroundColor: '#FFF',
-        borderColor: "#999",
+        borderColor: "#CCC",
         borderTopLeftRadius: 8,
         borderTopRightRadius: 0,
         borderBottomLeftRadius: 8,
@@ -139,7 +219,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ccc',
-        borderColor: "#999",
+        borderColor: "#CCC",
         borderWidth: 1,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 8,
@@ -169,6 +249,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     subtitle: {
+        fontFamily: 'Poppins_400Regular',
         fontSize: 14,
         fontWeight: '600',
         color: '#363f5f'
@@ -177,21 +258,27 @@ const styles = StyleSheet.create({
         marginTop: 18,
         fontSize: 18,
         color: '#363f5f',
+        fontFamily: 'Poppins_400Regular',
+    },
+    labelSwitch: {
+        fontSize: 18,
+        color: '#363f5f',
+        fontFamily: 'Poppins_400Regular',
     },
     input: {
         marginTop: 6,
         paddingHorizontal: 12,
         backgroundColor: '#FFF',
-        borderColor: "#999",
-        borderRadius: 8,
+        borderColor: "#CCC",
+        borderRadius: 4,
         width: '100%',
         height: 48,
         borderWidth: 1
     },
     title: {
+        fontFamily: 'Poppins_400Regular',
         textAlign: 'center',
         fontSize: 32,
-        fontWeight: '600',
         color: '#f0f2f5',
         marginVertical: 24,
     },
@@ -201,6 +288,7 @@ const styles = StyleSheet.create({
         marginTop: -108,
     },
     header: {
+        paddingTop: 12,
         height: 192,
         width: '100%',
         backgroundColor: '#2D4A22',
@@ -282,14 +370,14 @@ const styles = StyleSheet.create({
         paddingVertical: 24,
     },
     buttonText: {
+        fontFamily: 'Poppins_400Regular',
         fontSize: 18,
-        fontWeight: '600',
         color: '#f0f2f5',
         textAlign: 'center',
     },
     buttonTextCancel: {
+        fontFamily: 'Poppins_400Regular',
         fontSize: 18,
-        fontWeight: '600',
         color: '#F00',
         textAlign: 'center',
     },

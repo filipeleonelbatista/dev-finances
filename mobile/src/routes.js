@@ -31,8 +31,8 @@ export default function Routes() {
                     inactiveTintColor: '#2D4A22',
                 }}
             >
-                <Tab.Screen name="Finances" component={RoutesFinancesStack} />
-                <Tab.Screen name="AboutUs" component={AboutUs} />
+                <Tab.Screen options={{ title: "Financeiro" }} name="Finances" component={RoutesFinancesStack} />
+                <Tab.Screen options={{ title: "Sobre mim" }} name="AboutUs" component={AboutUs} />
             </Tab.Navigator>
         </NavigationContainer>
     );
