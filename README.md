@@ -55,6 +55,14 @@ Baixar o aplicativo do Expo para [Android](https://play.google.com/store/apps/de
   <img alt="snack-barcode" title="dev.finances" src=".github/snack.png" width="220px" />
 </h1>
 
+<p align="center">
+    <a href="./.github/app.apk">
+        <img width="150" src="./.github/android.svg">
+    </a>
+</p>
+
+---
+
 #### 🗂 Como instalar o projeto em react native
 
 ```bash
