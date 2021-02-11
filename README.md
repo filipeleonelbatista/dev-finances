@@ -56,7 +56,7 @@ Baixar o aplicativo do Expo para [Android](https://play.google.com/store/apps/de
 </h1>
 
 <p align="center">
-    <a href="./.github/app.apk">
+    <a href="https://github.com/filipeleonelbatista/dev-finances/raw/master/.github/app.apk">
         <img width="150" src="./.github/android.svg">
     </a>
 </p>
