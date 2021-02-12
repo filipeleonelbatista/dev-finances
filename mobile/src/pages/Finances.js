@@ -14,9 +14,9 @@ export default function Finances() {
 
   const navigation = useNavigation()
   const [transactions, setTransactions] = useState([]);
-  const [Incomings, setIncomings] = useState("0,00");
-  const [Expenses, setExpenses] = useState("0,00");
-  const [Total, setTotal] = useState("0,00");
+  const [Incomings, setIncomings] = useState("R$ 0,00");
+  const [Expenses, setExpenses] = useState("R$ 0,00");
+  const [Total, setTotal] = useState("R$ 0,00");
   const [Load, setLoad] = useState(true);
 
   async function loadTransactions() {
@@ -57,7 +57,7 @@ export default function Finances() {
       incomingsFormat = incomingsFormat.replace(/(?=(\d{3})+(\D))\B/g, ".");
 
       let resultTotal = total >= 0 ? "R$ " + (totalFormat ==="0"? "0,00" : (total < 100 ? "0,"+ (total < 10 ? "0" + totalFormat : totalFormat) : totalFormat)) : "-R$ " + (total > -100 ? "0," + (total > -10 ? "0" + totalFormat : totalFormat) : totalFormat);
-      let resultExpense =  expenses === 0 ? "-R$ 0,00" : ( expenses > -100 ? "-R$ 0," + (expenses > -10 ? "0" + expenseFormat : expenseFormat) : "-R$ " + expenseFormat );
+      let resultExpense =  expenses === 0 ? "R$ 0,00" : ( expenses < 100 ? "-R$ 0," + (expenses < 10 ? "0" + expenseFormat : expenseFormat) : "-R$ " + expenseFormat );
       let resultIncoming = incomings === 0 ? "R$ 0,00" : ( incomings < 100 ? "R$ 0," + (incomings < 10 ? "0" + incomingsFormat : incomingsFormat)  : "R$ " + incomingsFormat );
 
       setTotal(resultTotal);
