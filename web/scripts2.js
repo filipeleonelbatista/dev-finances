@@ -341,3 +341,21 @@ function calculaValor() {
 valor_unitario.addEventListener("input", (event) => calculaValor());
 
 quantidade.addEventListener("input", (event) => calculaValor());
+
+function exportJson() {
+  const data = JSON.stringify(Storage.get());
+  const budjet = JSON.stringify(StorageBudjet.get());
+  const database = {
+    budjet,
+    data,
+  };
+
+  const dataUri =
+    "data:application/json;charset=utf-8," +
+    encodeURIComponent(JSON.stringify(database));
+  let linkElement = document.createElement("a");
+  linkElement.setAttribute("href", dataUri);
+  linkElement.setAttribute("download", "database_compras.json");
+  linkElement.click();
+  linkElement.remove();
+}

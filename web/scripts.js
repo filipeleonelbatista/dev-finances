@@ -256,3 +256,15 @@ const App = {
 };
 
 App.init();
+
+function exportJson() {
+  const database = JSON.stringify(Storage.get());
+  const dataUri =
+    "data:application/json;charset=utf-8," +
+    encodeURIComponent(JSON.stringify(database));
+  let linkElement = document.createElement("a");
+  linkElement.setAttribute("href", dataUri);
+  linkElement.setAttribute("download", "database_financas.json");
+  linkElement.click();
+  linkElement.remove();
+}

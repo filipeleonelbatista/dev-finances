@@ -57,7 +57,13 @@
   </head>
   <body>
     <header>
-      <img src="./assets/logo2.svg" alt="Logo Minhas Compras" />
+      <div class="header-content">
+        <img src="./assets/logo.svg" alt="Logo Minhas Finanças" />
+        <div class="button-group">
+          <button onclick="exportJson();">Exportar</button>
+          <button>Importar</button>
+        </div>
+      </div>
     </header>
 
     <main class="container">
@@ -208,7 +214,9 @@
                 name="budjet_amount"
                 placeholder="0,00"
               />
-              <small class="help">Valor do orçamento para as compras do mês</small>
+              <small class="help"
+                >Valor do orçamento para as compras do mês</small
+              >
             </div>
             <div class="input-group actions">
               <a onclick="ModalBudjet.close()" href="#" class="button cancel"
@@ -226,7 +234,9 @@
         Desenvolvido com ❤️ por
         <a href="https://desenvolvedordeaplicativos.com.br">Filipe Batista</a>
       </p>
-      <p><a href="https://minhasfinancas.vercel.app/">Veja suas finanças aqui</a></p>
+      <p>
+        <a href="https://minhasfinancas.vercel.app/">Veja suas finanças aqui</a>
+      </p>
     </footer>
 
     <script src="./scripts2.js"></script>

@@ -4,32 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#49AA26" />
-    
-    <link
-    rel="shortcut icon"
-    type="image/png"
-    href="./favicon.png"
-    />
+
+    <link rel="shortcut icon" type="image/png" href="./favicon.png" />
     <title>minhas.financa$</title>
-    <meta
-      name="title"
-      content="minhas.financa$ | Controle seus gastos"
-    />
+    <meta name="title" content="minhas.financa$ | Controle seus gastos" />
     <meta
       name="description"
       content="Controle seus gastos mês a mês. Mantenha online os registros e tenha mais dinheiro."
     />
     <link rel="canonical" href="https://minhasfinancas.vercel.app" />
-    <meta
-      name="author"
-      content="minhas.financa$ | Controle seus gastos"
-    />
+    <meta name="author" content="minhas.financa$ | Controle seus gastos" />
     <meta name="robots" content="index" />
 
-    <meta
-      itemprop="name"
-      content="minhas.financa$ | Controle seus gastos"
-    />
+    <meta itemprop="name" content="minhas.financa$ | Controle seus gastos" />
     <meta
       itemprop="description"
       content="Controle seus gastos mês a mês. Mantenha online os registros e tenha mais dinheiro."
@@ -63,7 +50,7 @@
     <meta name="twitter:url" content=https://minhasfinancas.vercel.app />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:image" content="./assets/banner.png" />
-    
+
     <link rel="stylesheet" href="./style.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -73,7 +60,13 @@
   </head>
   <body>
     <header>
-      <img src="./assets/logo.svg" alt="Logo Minhas Finanças" />
+      <div class="header-content">
+        <img src="./assets/logo.svg" alt="Logo Minhas Finanças" />
+        <div class="button-group">
+          <button onclick="exportJson();">Exportar</button>
+          <button>Importar</button>
+        </div>
+      </div>
     </header>
 
     <main class="container">
@@ -152,7 +145,11 @@
             </div>
             <div class="input-group">
               <label class="sr-only" for="status">Status</label>
-              <select id="status" name="status" placeholder="Status da transação">
+              <select
+                id="status"
+                name="status"
+                placeholder="Status da transação"
+              >
                 <option value="0">Não Pago</option>
                 <option value="1">Pago</option>
               </select>
@@ -198,8 +195,12 @@
         Desenvolvido com ❤️ por
         <a href="https://desenvolvedordeaplicativos.com.br">Filipe Batista</a>
       </p>
-      
-      <p><a href="https://minhasfinancas.vercel.app/minhascompras.html">Veja sua lista de compras aqui</a></p>
+
+      <p>
+        <a href="https://minhasfinancas.vercel.app/minhascompras.html"
+          >Veja sua lista de compras aqui</a
+        >
+      </p>
     </footer>
 
     <script src="./scripts.js"></script>
