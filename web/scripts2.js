@@ -84,14 +84,11 @@ const BudjetTransaction = {
 
 const Storage = {
   get() {
-    return JSON.parse(localStorage.getItem("dev.finances:transactions")) || [];
+    return JSON.parse(localStorage.getItem("dev.finances:products")) || [];
   },
 
   set(transactions) {
-    localStorage.setItem(
-      "dev.finances:transactions",
-      JSON.stringify(transactions)
-    );
+    localStorage.setItem("dev.finances:products", JSON.stringify(transactions));
   },
 };
 
