@@ -125,6 +125,7 @@ header {
 
 /* Cards ===================== */
 .card {
+    width: 100%;
     background: white;
     padding: 0.8rem 1.2rem;
     border-radius: 0.25rem;
@@ -217,7 +218,8 @@ td>img{
 }
 
 /* Modal ===================== */
-.modal-overlay {
+.modal-overlay,
+.modal-overlay-budjet {
     width: 100%;
     height: 100%;
 
@@ -236,7 +238,8 @@ td>img{
     z-index: 999;
 }
 
-.modal-overlay.active {
+.modal-overlay.active,
+.modal-overlay-budjet.active {
     opacity: 1;
     visibility: visible;
 }
@@ -306,7 +309,7 @@ footer {
 
     #balance {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
     }
 }

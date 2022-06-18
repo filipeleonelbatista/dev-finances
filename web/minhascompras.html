@@ -4,42 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#49AA26" />
-    
-    <link
-    rel="shortcut icon"
-    type="image/png"
-    href="./favicon.png"
-    />
-    <title>minhas.financa$</title>
-    <meta
-      name="title"
-      content="minhas.financa$ | Controle seus gastos"
-    />
+
+    <link rel="shortcut icon" type="image/png" href="./favicon.png" />
+    <title>minhas.compra$</title>
+    <meta name="title" content="minhas.compra$ | Controle seus gastos" />
     <meta
       name="description"
       content="Controle seus gastos mês a mês. Mantenha online os registros e tenha mais dinheiro."
     />
     <link rel="canonical" href="https://minhasfinancas.vercel.app" />
-    <meta
-      name="author"
-      content="minhas.financa$ | Controle seus gastos"
-    />
+    <meta name="author" content="minhas.compra$ | Controle seus gastos" />
     <meta name="robots" content="index" />
 
-    <meta
-      itemprop="name"
-      content="minhas.financa$ | Controle seus gastos"
-    />
+    <meta itemprop="name" content="minhas.compra$ | Controle seus gastos" />
     <meta
       itemprop="description"
       content="Controle seus gastos mês a mês. Mantenha online os registros e tenha mais dinheiro."
     />
     <meta itemprop="image" content="./assets/banner.png" />
 
-    <meta
-      property="og:title"
-      content="minhas.financa$ | Controle seus gastos"
-    />
+    <meta property="og:title" content="minhas.compra$ | Controle seus gastos" />
     <meta
       property="og:description"
       content="Controle seus gastos mês a mês. Mantenha online os registros e tenha mais dinheiro."
@@ -47,14 +31,14 @@
     <meta property="og:url" content=https://minhasfinancas.vercel.app />
     <meta
       property="og:site_name"
-      content="minhas.financa$ | Controle seus gastos"
+      content="minhas.compra$ | Controle seus gastos"
     />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="./assets/banner.png" />
 
     <meta
       name="twitter:title"
-      content="minhas.financa$ | Controle seus gastos"
+      content="minhas.compra$ | Controle seus gastos"
     />
     <meta
       name="twitter:description"
@@ -63,8 +47,8 @@
     <meta name="twitter:url" content=https://minhasfinancas.vercel.app />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:image" content="./assets/banner.png" />
-    
-    <link rel="stylesheet" href="./style.css" />
+
+    <link rel="stylesheet" href="./style2.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap"
@@ -73,7 +57,7 @@
   </head>
   <body>
     <header>
-      <img src="./assets/logo.svg" alt="Logo Minhas Finanças" />
+      <img src="./assets/logo2.svg" alt="Logo Minhas Compras" />
     </header>
 
     <main class="container">
@@ -82,15 +66,17 @@
 
         <div class="card">
           <h3>
-            <span> Entradas </span>
-            <img src="./assets/income.svg" alt="Image de entradas" />
+            <span> Orçamento </span>
+            <a href="#" onclick="ModalBudjet.open()" class="button new">
+              <img src="./assets/income.svg" alt="Image de entradas" />
+            </a>
           </h3>
           <p id="incomeDisplay">R$ 0,00</p>
         </div>
 
         <div class="card">
           <h3>
-            <span> Saídas </span>
+            <span> Compras </span>
             <img src="./assets/expense.svg" alt="Image de saídas" />
           </h3>
           <p id="expenseDisplay">R$ 0,00</p>
@@ -103,31 +89,24 @@
           </h3>
           <p id="totalDisplay">R$ 0,00</p>
         </div>
-
-        <div class="card">
-          <h3>
-            <span> Saldo atual </span>
-            <img src="./assets/income.svg" alt="Image de entradas" />
-          </h3>
-          <p id="paidAmount">R$ 0,00</p>
-        </div>
       </section>
 
       <section id="transaction">
         <h2 class="sr-only">Transações</h2>
 
         <a href="#" onclick="Modal.open()" class="button new"
-          >+ Nova Transação</a
+          >+ Adicionar Produto</a
         >
 
         <table id="data-table">
           <thead>
             <tr>
-              <th>Descrição</th>
-              <th>Status</th>
-              <th>Valor</th>
+              <th>Nome</th>
+              <th>Qtd</th>
+              <th>Valor unitário</th>
+              <th>Valor total</th>
               <th>Data</th>
-              <th></th>
+              <th>Local</th>
               <th></th>
             </tr>
           </thead>
@@ -139,46 +118,68 @@
     <div class="modal-overlay">
       <div class="modal">
         <div id="form">
-          <h2>Nova Transação</h2>
+          <h2>Adicionar produto</h2>
           <form action="" onsubmit="Form.submit(event)">
             <div class="input-group">
-              <label class="sr-only" for="description">Descrição</label>
+              <label class="sr-only" for="name">Nome do produto</label>
               <input
                 type="text"
-                id="description"
-                name="description"
-                placeholder="Descrição"
+                id="name"
+                name="name"
+                placeholder="Nome do produto"
               />
             </div>
             <div class="input-group">
-              <label class="sr-only" for="status">Status</label>
-              <select id="status" name="status" placeholder="Status da transação">
-                <option value="0">Não Pago</option>
-                <option value="1">Pago</option>
-              </select>
-              <small class="help"
-                >Define o status da transação se foi pago ou não</small
-              >
-            </div>
-
-            <div class="input-group">
-              <label class="sr-only" for="amount">Valor</label>
+              <label class="sr-only" for="quantity">Quantidade</label>
               <input
+                inputmode="numeric"
+                type="number"
+                id="quantity"
+                name="quantity"
+                placeholder="Quantidade"
+              />
+            </div>
+            <div class="input-group">
+              <label class="sr-only" for="unity_amount">Valor unitário</label>
+              <input
+                inputmode="numeric"
                 type="number"
                 step="0.01"
-                id="amount"
-                name="amount"
+                id="unity_amount"
+                name="unity_amount"
+                placeholder="0,00"
+              />
+              <small class="help">Valor por unidade do produto comprado</small>
+            </div>
+            <div class="input-group">
+              <label class="sr-only" for="total_amount">Valor total</label>
+              <input
+                inputmode="numeric"
+                type="number"
+                step="0.01"
+                id="total_amount"
+                name="total_amount"
                 placeholder="0,00"
               />
               <small class="help"
-                >Use o sinal - (negativo) para despesas e , (vírgula) para casas
-                decimais</small
+                >Valor por total é calculado com base na quantidade e valur
+                unitário do produto comprado</small
               >
             </div>
 
             <div class="input-group">
               <label class="sr-only" for="date">Data</label>
               <input type="date" id="date" name="date" />
+            </div>
+
+            <div class="input-group">
+              <label class="sr-only" for="location">Local</label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="Local"
+              />
             </div>
 
             <div class="input-group actions">
@@ -192,16 +193,42 @@
       </div>
     </div>
 
+    <div class="modal-overlay-budjet">
+      <div class="modal">
+        <div id="form">
+          <h2>Editar orçamento</h2>
+          <form action="" onsubmit="FormBudjet.submit(event)">
+            <div class="input-group">
+              <label class="sr-only" for="budjet_amount">Valor previsto</label>
+              <input
+                inputmode="numeric"
+                type="number"
+                step="0.01"
+                id="budjet_amount"
+                name="budjet_amount"
+                placeholder="0,00"
+              />
+              <small class="help">Valor do orçamento para as compras do mês</small>
+            </div>
+            <div class="input-group actions">
+              <a onclick="ModalBudjet.close()" href="#" class="button cancel"
+                >Cancelar</a
+              >
+              <button>Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     <footer>
-      <p>minhas.finança$</p>
+      <p>minhas.compra$</p>
       <p>
         Desenvolvido com ❤️ por
         <a href="https://desenvolvedordeaplicativos.com.br">Filipe Batista</a>
       </p>
-      
-      <p><a href="https://minhasfinancas.vercel.app/minhascompras.html">Veja sua lista de compras aqui</a></p>
+      <p><a href="https://minhasfinancas.vercel.app/">Veja suas finanças aqui</a></p>
     </footer>
 
-    <script src="./scripts.js"></script>
+    <script src="./scripts2.js"></script>
   </body>
 </html>
