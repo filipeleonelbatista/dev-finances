@@ -58,10 +58,17 @@
   <body>
     <header>
       <div class="header-content">
-        <img src="./assets/logo.svg" alt="Logo Minhas Finanças" />
+        <img src="./assets/logo2.svg" alt="Logo Minhas Finanças" />
         <div class="button-group">
           <button onclick="exportJson();">Exportar</button>
-          <button>Importar</button>
+          <button onclick="document.querySelector('input#import-json').click();">Importar</button>
+          <input
+            type="file"
+            accept="application/JSON"
+            id="import-json"
+            name="import-json"
+            onchange="viewFile(this.files);"
+          />
         </div>
       </div>
     </header>

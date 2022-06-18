@@ -338,9 +338,9 @@ function calculaValor() {
   valor_total.value = quantidade.value * valor_unitario.value;
 }
 
-valor_unitario.addEventListener("input", (event) => calculaValor());
+valor_unitario.addEventListener("input", () => calculaValor());
 
-quantidade.addEventListener("input", (event) => calculaValor());
+quantidade.addEventListener("input", () => calculaValor());
 
 function exportJson() {
   const data = JSON.stringify(Storage.get());
@@ -359,3 +359,28 @@ function exportJson() {
   linkElement.click();
   linkElement.remove();
 }
+
+const linkElement = document.querySelector("input#import-json");
+
+const viewFile = (files) => {
+  let f = files[0];
+  let reader = new FileReader();
+  reader.onload = (function (theFile) {
+    return function (e) {
+      if (
+        confirm(
+          "Deseja carregar este arquivo? Isso sobreescreverá o conteúdo existente!"
+        )
+      ) {
+        const database = JSON.parse(e.target.result.replace(/\\\//g, "/"));
+
+        Storage.set(JSON.parse(database.data));
+        StorageBudjet.set(JSON.parse(database.budjet));
+
+        location.reload();
+      }
+    };
+  })(f);
+
+  reader.readAsText(f);
+};

@@ -268,3 +268,28 @@ function exportJson() {
   linkElement.click();
   linkElement.remove();
 }
+
+const linkElement = document.querySelector("input#import-json");
+
+const viewFile = (files) => {
+  let f = files[0];
+  let reader = new FileReader();
+  reader.onload = (function (theFile) {
+    return function (e) {
+      if (
+        confirm(
+          "Deseja carregar este arquivo? Isso sobreescreverá o conteúdo existente!"
+        )
+      ) {
+        const database = JSON.parse(
+          JSON.parse(e.target.result.replace(/\\\//g, "/"))
+        );
+        Storage.set(database);
+
+        location.reload();
+      }
+    };
+  })(f);
+
+  reader.readAsText(f);
+};
