@@ -82,6 +82,32 @@ button:hover {
   margin-bottom: 0.8rem;
 }
 
+.floating-button{
+  position: fixed;
+  
+  bottom: 2.4rem;
+  right: 2.4rem;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  width: 3.2rem;
+  height: 3.2rem;
+
+  background-color: var(--green);
+
+  border-radius: 50%;
+
+  font-size: x-large;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1;
+  color:#FFF;
+
+}
+
 .button.cancel {
   color: var(--red);
   border: 2px var(--red) solid;

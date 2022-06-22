@@ -64,7 +64,11 @@
         <img src="./assets/logo.svg" alt="Logo Minhas Finanças" />
         <div class="button-group">
           <button onclick="exportJson();">Exportar</button>
-          <button onclick="document.querySelector('input#import-json').click();">Importar</button>
+          <button
+            onclick="document.querySelector('input#import-json').click();"
+          >
+            Importar
+          </button>
           <input
             type="file"
             accept="application/JSON"
@@ -115,11 +119,7 @@
 
       <section id="transaction">
         <h2 class="sr-only">Transações</h2>
-
-        <a href="#" onclick="Modal.open()" class="button new"
-          >+ Nova Transação</a
-        >
-
+        <a href="#" onclick="Modal.open()" title="Nova transação" class="floating-button">+</a>
         <table id="data-table">
           <thead>
             <tr>
