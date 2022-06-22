@@ -61,7 +61,11 @@
         <img src="./assets/logo2.svg" alt="Logo Minhas Finanças" />
         <div class="button-group">
           <button onclick="exportJson();">Exportar</button>
-          <button onclick="document.querySelector('input#import-json').click();">Importar</button>
+          <button
+            onclick="document.querySelector('input#import-json').click();"
+          >
+            Importar
+          </button>
           <input
             type="file"
             accept="application/JSON"
@@ -107,13 +111,21 @@
       <section id="transaction">
         <h2 class="sr-only">Transações</h2>
 
-        <a href="#" onclick="Modal.open()" title="Adicionar produto" class="floating-button">+</a>
+        <a
+          href="#"
+          onclick="Modal.open()"
+          title="Adicionar produto"
+          class="floating-button"
+          >+</a
+        >
 
         <table id="data-table">
           <thead>
             <tr>
               <th>Nome</th>
+              <th>Estoque</th>
               <th>Qtd</th>
+              <th>Em falta</th>
               <th>Valor unitário</th>
               <th>Valor total</th>
               <th>Data</th>
@@ -138,6 +150,18 @@
                 id="name"
                 name="name"
                 placeholder="Nome do produto"
+              />
+            </div>
+            <div class="input-group">
+              <label class="sr-only" for="inventory"
+                >Quantidade desejada em estoque</label
+              >
+              <input
+                inputmode="numeric"
+                type="number"
+                id="inventory"
+                name="inventory"
+                placeholder="Quantidade desejada em estoque"
               />
             </div>
             <div class="input-group">
@@ -176,6 +200,20 @@
                 >Valor por total é calculado com base na quantidade e valur
                 unitário do produto comprado</small
               >
+            </div>
+
+            <div class="input-group">
+              <label class="sr-only" for="category">Categoria</label>
+              <select id="category" name="category" placeholder="Categoria">
+                <option value="0">Comida</option>
+                <option value="1">Higiene</option>
+                <option value="3">Fruteira</option>
+                <option value="4">Carnes</option>
+                <option value="5">Outros</option>
+              </select>
+              <small class="help">
+                Define a categoria do produto comprado
+              </small>
             </div>
 
             <div class="input-group">

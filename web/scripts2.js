@@ -172,10 +172,16 @@ const DOM = {
   innerHTMLTransaction(transaction, index) {
     const unity_amount = Utils.formatCurrency(transaction.unity_amount);
     const total_amount = Utils.formatCurrency(transaction.total_amount);
+    const inventoryQuantity = transaction.inventory - transaction.quantity;
+    const hasInventory = inventoryQuantity <= 0;
 
     const html = `
         <td class="description">${transaction.name}</td>
+        <td class="description">${transaction.inventory}</td>
         <td class="description">${transaction.quantity}</td>
+        <td ${
+          !hasInventory && "style='color:red; font-weight: bold'"
+        }  class="description">${hasInventory ? "0" : inventoryQuantity}</td>
         <td class="description">${unity_amount}</td>
         <td class="income">${total_amount}</td>
         <td class="date">${transaction.date}</td>
@@ -239,32 +245,46 @@ const Utils = {
 
 const Form = {
   name: document.querySelector("input#name"),
+  inventory: document.querySelector("input#inventory"),
   quantity: document.querySelector("input#quantity"),
   unity_amount: document.querySelector("input#unity_amount"),
   total_amount: document.querySelector("input#total_amount"),
+  category: document.querySelector("select#category"),
   date: document.querySelector("input#date"),
   location: document.querySelector("input#location"),
 
   getValues() {
     return {
       name: Form.name.value,
+      inventory: Form.inventory.value,
       quantity: Form.quantity.value,
       unity_amount: Form.unity_amount.value,
       total_amount: Form.total_amount.value,
+      category: Form.category.value,
       date: Form.date.value,
       location: Form.location.value,
     };
   },
 
   validateFields() {
-    const { name, quantity, unity_amount, total_amount, date, location } =
-      Form.getValues();
+    const {
+      name,
+      inventory,
+      quantity,
+      unity_amount,
+      total_amount,
+      category,
+      date,
+      location,
+    } = Form.getValues();
 
     if (
       name.trim() === "" ||
+      inventory.trim() === "" ||
       quantity.trim() === "" ||
       unity_amount.trim() === "" ||
       total_amount.trim() === "" ||
+      category.trim() === "" ||
       date.trim() === "" ||
       location.trim() === ""
     ) {
@@ -273,16 +293,26 @@ const Form = {
   },
 
   formatValues() {
-    let { name, quantity, unity_amount, total_amount, date, location } =
-      Form.getValues();
+    let {
+      name,
+      inventory,
+      quantity,
+      unity_amount,
+      total_amount,
+      category,
+      date,
+      location,
+    } = Form.getValues();
 
     date = Utils.formatDate(date);
 
     return {
       name,
-      quantity: Utils.formatAmount(quantity),
+      inventory: parseFloat(inventory),
+      quantity: parseFloat(quantity),
       unity_amount: Utils.formatAmount(unity_amount),
       total_amount: Utils.formatAmount(total_amount),
+      category,
       date,
       location,
     };
@@ -290,9 +320,11 @@ const Form = {
 
   clearFields() {
     Form.name.value = "";
+    Form.inventory.value = "";
     Form.quantity.value = "";
     Form.unity_amount.value = "";
     Form.total_amount.value = "";
+    Form.category.value = "";
     Form.date.value = "";
     Form.location.value = "";
   },
