@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#49AA26" />
+
+  <link rel="shortcut icon" type="image/png" href="./favicon.png" />
+  <title>minhas.corridas$</title>
+  <meta name="title" content="minhas.corridas$ | Controle seus gastos" />
+  <meta name="description"
+    content="Controle seus gastos mês a mês. Mantenha online os registros e tenha mais dinheiro." />
+  <link rel="canonical" href="https://minhasfinancas.vercel.app" />
+  <meta name="author" content="minhas.corridas$ | Controle seus gastos" />
+  <meta name="robots" content="index" />
+
+  <meta itemprop="name" content="minhas.corridas$ | Controle seus gastos" />
+  <meta itemprop="description"
+    content="Controle seus gastos mês a mês. Mantenha online os registros e tenha mais dinheiro." />
+  <meta itemprop="image" content="./assets/banner.png" />
+
+  <meta property="og:title" content="minhas.corridas$ | Controle seus gastos" />
+  <meta property="og:description"
+    content="Controle seus gastos mês a mês. Mantenha online os registros e tenha mais dinheiro." />
+  <meta property="og:url" content=https://minhasfinancas.vercel.app />
+  <meta property="og:site_name" content="minhas.corridas$ | Controle seus gastos" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./assets/banner.png" />
+
+  <meta name="twitter:title" content="minhas.corridas$ | Controle seus gastos" />
+  <meta name="twitter:description"
+    content="Controle seus gastos mês a mês. Mantenha online os registros e tenha mais dinheiro." />
+  <meta name="twitter:url" content=https://minhasfinancas.vercel.app />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="./assets/banner.png" />
+
+  <link rel="stylesheet" href="./style3.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <header>
+    <div class="header-content">
+      <img src="./assets/logo3.svg" alt="Logo Minhas Corridas" />
+      <div class="button-group">
+        <button onclick="exportJson();">Exportar</button>
+        <button onclick="document.querySelector('input#import-json').click();">
+          Importar
+        </button>
+        <input type="file" accept="application/JSON" id="import-json" name="import-json"
+          onchange="viewFile(this.files);" />
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="balance">
+      <h2 class="sr-only">Balanço</h2>
+
+      <div class="card">
+        <h3>
+          <span> Autonomia </span>
+          <a href="#" onclick="ModalAutonomy.open()" class="button new">
+            <img src="./assets/income.svg" alt="Image de entradas" />
+          </a>
+        </h3>
+        <p id="incomeDisplay">12 L</p>
+      </div>
+
+      <div class="card">
+        <h3>
+          <span>Km atual </span>
+          <img src="./assets/expense.svg" alt="Image de saídas" />
+        </h3>
+        <p id="expenseDisplay">R$ 0,00</p>
+      </div>
+
+      <div class="card total">
+        <h3>
+          <span> Km Estimado </span>
+          <img src="./assets/total.svg" alt="Image de total" />
+        </h3>
+        <p id="totalDisplay">R$ 0,00</p>
+      </div>
+    </section>
+
+    <section id="transaction">
+      <h2 class="sr-only">Transações</h2>
+
+      <a href="#" onclick="Modal.open()" title="Adicionar produto" class="floating-button">+</a>
+
+      <table id="data-table">
+        <thead>
+          <tr>
+            <th>Km Atual</th>
+            <th>Litros</th>
+            <th>Valor pago</th>
+            <th>Valor Total</th>
+            <th>Combustivel</th>
+            <th>Data</th>
+            <th>Local</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <div class="modal-overlay">
+    <div class="modal">
+      <div id="form">
+        <h2>Adicionar abastecimento</h2>
+        <form action="" onsubmit="Form.submit(event)">
+          <div class="input-group">
+            <label class="sr-only" for="name">Km Atual</label>
+            <input type="text" id="actual_distance" name="actual_distance" placeholder="Km Atual" />
+          </div>
+          <div class="input-group">
+            <label class="sr-only" for="fuel_volume">Quantidade em litros abastecidos</label>
+            <input inputmode="numeric" type="number" step="0.01" id="fuel_volume" name="fuel_volume"
+              placeholder="Quantidade em litros abastecidos" />
+          </div>
+          <div class="input-group">
+            <label class="sr-only" for="unity_amount">Valor unitário do combustivel</label>
+            <input inputmode="numeric" type="number" step="0.01" id="unity_amount" name="unity_amount"
+              placeholder="0,00" />
+            <small class="help">Valor por unidade do produto comprado</small>
+          </div>
+
+          <div class="input-group">
+            <label class="sr-only" for="fuel_type">Combustivel</label>
+            <select id="fuel_type" name="fuel_type" placeholder="Categoria">
+              <option value="0">Comun</option>
+              <option value="1">Aditivada</option>
+              <option value="3">Etanol</option>
+              <option value="4">Dísel S20</option>
+              <option value="5">Dísel</option>
+            </select>
+            <small class="help">
+              Define o combustivel comprado
+            </small>
+          </div>
+
+          <div class="input-group">
+            <label class="sr-only" for="date">Data</label>
+            <input type="date" id="date" name="date" />
+          </div>
+
+          <div class="input-group">
+            <label class="sr-only" for="location">Local</label>
+            <input type="text" id="location" name="location" placeholder="Local" />
+          </div>
+
+          <div class="input-group actions">
+            <a onclick="Modal.close()" href="#" class="button cancel">Cancelar</a>
+            <button>Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay-autonomy">
+    <div class="modal">
+      <div id="form">
+        <h2>Editar autonomia</h2>
+        <form action="" onsubmit="FormAutonomy.submit(event)">
+          <div class="input-group">
+            <label class="sr-only" for="autonomy">Valor autonomia</label>
+            <input inputmode="numeric" type="number" step="1" id="autonomy" name="autonomy"
+              placeholder="" />
+            <small class="help">
+              Valor de autonomia do veículo em litros
+            </small>
+          </div>
+          <div class="input-group actions">
+            <a onclick="ModalAutonomy.close()" href="#" class="button cancel">Cancelar</a>
+            <button>Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p>minhas.corridas$</p>
+    <p>
+      Desenvolvido com ❤️ por
+      <a href="https://desenvolvedordeaplicativos.com.br">Filipe Batista</a>
+    </p>
+    <p>
+      <a href="https://minhasfinancas.vercel.app/">Veja suas finanças aqui</a>
+    </p>
+  </footer>
+
+  <script src="./scripts3.js"></script>
+</body>
+
+</html>
